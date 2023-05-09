@@ -3,10 +3,8 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import os
 import time
 import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning, module='pytz')
-warnings.filterwarnings("ignore", category=DeprecationWarning, module='pytz')
 
-# 拍照
+# 调用手机相机拍照
 def camera():
     try :
         now = datetime.now()
@@ -21,11 +19,11 @@ def camera():
         # 启动相机
         os.system("adb shell am start -a android.media.action.STILL_IMAGE_CAMERA")
         # 多留点时间自动对焦
-        time.sleep(3)
+        time.sleep(5)
         # camera键 拍照
         os.system("adb shell input keyevent 27")
         # 留点时间存储照片防止读取到上一张图片
-        time.sleep(3)
+        time.sleep(5)
         # 获得最新的一张照片的文件名
         picture_url = os.popen("adb shell ls -t /storage/emulated/0/DCIM/Camera/ -t").read()
         name_list = picture_url.split("\n")
@@ -47,24 +45,14 @@ def camera():
     except Exception as e :
         print(F"Error{e}")
 
-# def photo_time():
-#     pass
-
-
-
-
-def func() :
-    # 创建调度器BlockingScheduler()
+# 处理时间
+def photo_time(times=None):
+    times = times.split(",")
     scheduler = BlockingScheduler()
-
-    scheduler.add_job(camera, 'cron', day_of_week = None, hour = '08', minute = '22', second = '00',timezone="Asia/Shanghai")
-    scheduler.add_job(camera, 'cron', day_of_week = None, hour = '22', minute = '00', second = '00',timezone="Asia/Shanghai")
-    scheduler.add_job(camera, 'cron', day_of_week = None, hour = '22', minute = '04', second = '00',timezone="Asia/Shanghai")
-    scheduler.add_job(camera, 'cron', day_of_week = None, hour = '22', minute = '34', second = '00',timezone="Asia/Shanghai")
-    scheduler.add_job(camera, 'cron', day_of_week = None, hour = '22', minute = '36', second = '00',timezone="Asia/Shanghai")
-    scheduler.add_job(camera, 'cron', day_of_week = None, hour = '23', minute = '04', second = '00',timezone="Asia/Shanghai")
-    scheduler.add_job(camera, 'cron', day_of_week = None, hour = '23', minute = '06', second = '00',timezone="Asia/Shanghai")
+    for i in times:
+        scheduler.add_job(camera, 'cron', day_of_week = None, hour = i[0:2:], minute = i[2:4:], second = i[4:6:],timezone = "Asia/Shanghai")
     scheduler.start()
 
-if __name__ == '__main__' :
-    func()
+
+
+photo_time('085000,085200,085400,085500,085100')
