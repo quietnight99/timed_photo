@@ -4,6 +4,7 @@ import os
 import time
 import warnings
 from Send_Photo import Send_Photo
+from Webhook_send_msg import Wenhook_send
 
 # 调用手机相机拍照并上传
 def camera():
@@ -46,7 +47,9 @@ def camera():
         os.system("adb shell input keyevent 26")
         # 调用邮件发送图片至邮箱
         Send_Photo(myfilename)
-        return myfilename
+        # 企业微信推送图片
+        Wenhook_send(myfilename)
+        # return myfilename
     except Exception as e :
         print(F"Error{e}")
 
@@ -58,8 +61,7 @@ def photo_time(times=None):
         scheduler.add_job(camera, 'cron', day_of_week = None, hour = i[0:2:], minute = i[2:4:], second = i[4:6:],timezone = "Asia/Shanghai")
     scheduler.start()
 
-photo_time('152600')
-#photo_time('170100,170230,170500,172700,220200,220330,220600,220730,223400,223530,223500,223630,230400,230540,230500,230700')
-
-
-# camera()
+time.sleep(2)
+camera()
+time.sleep(2)
+photo_time('162000,162500,100000,100130,100300,100430,100530,100700,100830,122900,123030,123130,132900,133030,133130,170100,170230,170500,170630,220200,220330,220600,220730,223400,223530,223630,230400,230530,230630,020000')
