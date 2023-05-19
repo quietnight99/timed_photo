@@ -34,7 +34,7 @@ def camera():
         print("图片名称{}".format(myfilename))
         time.sleep(1)
         # 指定要保存到的目标文件夹路径
-        target_folder = "./picture/"
+        target_folder = r"\\192.168.30.65/yf1/wengzhichao/picture/"
         # 构建adb命令
         adb_code = "adb pull /storage/emulated/0/DCIM/Camera/" + myfilename + " " + target_folder
         # 执行adb命令
@@ -61,7 +61,7 @@ def photo_time(times=None):
         scheduler.add_job(camera, 'cron', day_of_week = None, hour = i[0:2:], minute = i[2:4:], second = i[4:6:],timezone = "Asia/Shanghai")
     scheduler.start()
 
-time.sleep(2)
+time.sleep(1)
 camera()
-time.sleep(2)
-photo_time('162000,162500,100000,100130,100300,100430,100530,100700,100830,122900,123030,123130,132900,133030,133130,170100,170230,170500,170630,220200,220330,220600,220730,223400,223530,223630,230400,230530,230630,020000')
+# time.sleep(2)
+# photo_time('165900,165000,100000,100130,100300,100430,100530,100700,100830,122900,123030,123130,132900,133030,133130,170100,170230,170500,170630,220200,220330,220600,220730,223400,223530,223630,230400,230530,230630,020000')
