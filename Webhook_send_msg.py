@@ -3,37 +3,43 @@ import base64
 import hashlib
 import os
 from PIL import Image
+from Read_Phone_Camera_Config import Read_Phone_Camera_Config
 
-Wenhook_url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a6fa89d0-1ffa-459f-98a2-b8b2bd83c415'
-Wenhook_url_1 = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=05e0f108-8ba3-45cb-ab50-fba37acf322c'
+data = Read_Phone_Camera_Config()
+target_folder = data['target_folder']
+Wenhook_url = data['Webhook_url']
+Wenhook_url_1 = data['Wenhook_url_1']
 
 
-def Wenhook_send(picture_name, titles='默认标题', descriptions='默认描述') :
+# 必须与图片服务器在一个局域网下才能查看图片
+def Wenhook_send(picture_name, titles='默认标题', descriptions='默认描述'):
     # API URL
 
     # 请求体数据
-    data = {
-        "msgtype" : "news",
-        "news" : {
-            "articles" : [
+    datas = {
+        "msgtype": "news",
+        "news": {
+            "articles": [
                 {
-                    "title" : titles,
-                    "description" : descriptions,
-                    "url" : r"\\192.168.30.65\yf1\wengzhichao\picture\{}".format(picture_name),
-                    "picurl" : r"\\192.168.30.65\yf1\wengzhichao\picture\{}".format(picture_name),
+                    "title": titles,
+                    "description": descriptions,
+                    "url": target_folder + picture_name,
+                    "picurl": target_folder + picture_name,
                 }
             ]
         }
     }
 
     # 发送请求
-    response = requests.post(url = Wenhook_url, json = data)
+    response = requests.post(url=Wenhook_url, json=datas)
+    print("需在同一局域网下查看图片")
     print(response.text)
+
 
 # 企业微信直接推送图片，但要小于2M所以对图片进行压缩
 def load_image(file_path):
     # 图片路径
-    picture_url = r"\\192.168.30.65/yf1/wengzhichao/picture/"
+    picture_url = target_folder
     # 图片路径+图片名称
     file_path = picture_url + file_path
     # 获取文件大小
@@ -59,6 +65,7 @@ def load_image(file_path):
 
     return image_data
 
+# 压缩后直接展示在企业微信，有网即可查看
 def Wenhook_send_1(picture_name):
     # API URL
     url = Wenhook_url_1
@@ -66,18 +73,17 @@ def Wenhook_send_1(picture_name):
     base64_data = base64.b64encode(picture_data).decode('utf-8')
     md5_value = hashlib.md5(picture_data).hexdigest()
     # 请求体数据
-    data = {
-        "msgtype" : "image",
-        "image" : {
-            "base64" : base64_data,
-            "md5" : md5_value,
-            "pic_url" : ""
+    datas = {
+        "msgtype": "image",
+        "image": {
+            "base64": base64_data,
+            "md5": md5_value,
+            "pic_url": ""
         }
     }
 
     # 发送请求
-    response = requests.post(url = url, json = data)
+    response = requests.post(url=url, json=datas)
+    print("企业微信直接查看图片")
     print(response.text)
-# #
-# # Wenhook_send('IMG_20230517_123035.jpg')
-# Wenhook_send_1('IMG_20230531_100307.jpg')
+
