@@ -5,8 +5,8 @@ import os
 from PIL import Image
 from datetime import datetime
 
-Wenhook_url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a6fa89d0-1ffa-459f-98a2-b8b2bd83c415'
-Wenhook_url_1 = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=00b41381-5906-462a-8c7e-e1bb173a8eab'
+Wenhook_url = ''
+Wenhook_url_1 = ''
 
 
 def Wenhook_send(picture_name, titles='默认标题', descriptions='默认描述') :
