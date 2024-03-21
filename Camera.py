@@ -3,6 +3,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import os
 import time
 import warnings
+warnings.filterwarnings("ignore", message="urllib3")
 from Send_Photo import Send_Photo
 from Webhook_send_msg import Wenhook_send,Wenhook_send_1
 
@@ -46,12 +47,15 @@ def camera():
         # Power键 黑屏
         os.system("adb shell input keyevent 26")
         time.sleep(2)
-        # 调用邮件发送图片至邮箱
-        Send_Photo(myfilename)
-        time.sleep(2)
+
+        # # 调用邮件发送图片至邮箱
+        # Send_Photo(myfilename)
+        # time.sleep(2)
+
         # 企业微信推送图片
-        Wenhook_send(myfilename)
-        time.sleep(2)
+        # Wenhook_send(myfilename)
+        # time.sleep(2)
+
         Wenhook_send_1(myfilename)
         # return myfilename
     except Exception as e :
@@ -68,5 +72,7 @@ def photo_time(times=None):
 # time.sleep(1)
 # camera()
 # time.sleep(2)
-# photo_time('122200,163000,100000,100130,100300,100430,100530,100700,100830,122900,123030,123130,132900,133030,133130,170100,170230,170500,170630,220200,220330,220600,220730,223400,223530,223630,230400,230530,230630,020000')
-photo_time('154010,154210,154410,154610,154810,155010,155210,155410,155610,155810,160010,160210')
+
+photo_time('084900,001000,001200,011200,011400,015900,020100,025900,030100,030900,031100,034900,035100,035900,040100,042900,043100,'
+           '055900,060100,065900,070100,111900,112100,124900,125100,150000,150200,170000,170200,'
+           '170400,170600,190400,190600')

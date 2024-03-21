@@ -60,15 +60,6 @@ def Send_Photo(picture_name):
 
 
 
-
-
-
-
-
-
-
-
-
     # msg = EmailMessage()
     # # 邮件主题
     # msg['subject'] = subject
