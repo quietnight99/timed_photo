@@ -1,0 +1,14 @@
+#将图片保存到远程以供查看，下方为保存图片文件夹的路径
+target_folder: //192.168.30.65/yf1/wengzhichao/picture/
+# 企业微信机器人地址,必须与图片服务器在一个局域网下才能查看图片
+Webhook_url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=4503775b-9539-43ce-87b0-1c10f3dd1b5a
+# 企业微信机器人地址,这个为压缩后直接展示在企业微信，有网即可查看
+Wenhook_url_1: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=00b41381-5906-462a-8c7e-e1bb173a8eab
+# SMTP发件人邮箱
+EMAIL_ADDRESS: 2231742813@qq.com
+# SMTP的授权码(QQ邮箱设置里找)
+EMAIL_PASSWORD: ervlwvcemlkidifa
+# 发件人邮箱
+SENDER: 2231742813@qq.com
+# 收件人邮箱
+RECEIVER: 2508427602@qq.com
